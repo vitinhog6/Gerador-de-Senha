@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Senhas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    input[type="number"] {
+      width: 60px;
+      padding: 0.5rem;
+      margin: 0.5rem;
+      text-align: center;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    .senha {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      word-break: break-all;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔐 Gerador de Senhas</h2>
+    <label for="tamanho">Comprimento da senha:</label>
+    <input type="number" id="tamanho" value="12" min="4" max="64">
+
+    <label>
+      <input type="checkbox" id="maiusculas" checked> Incluir letras maiúsculas
+    </label>
+    <label>
+      <input type="checkbox" id="minusculas" checked> Incluir letras minúsculas
+    </label>
+    <label>
+      <input type="checkbox" id="numeros" checked> Incluir números
+    </label>
+    <label>
+      <input type="checkbox" id="simbolos"> Incluir símbolos
+    </label>
+
+    <button onclick="gerarSenha()">Gerar Senha</button>
+
+    <div class="senha" id="senhaGerada">Sua senha aparecerá aqui</div>
+  </div>
+
+  <script>
+    function gerarSenha() {
+      const tamanho = parseInt(document.getElementById('tamanho').value);
+      const incluirMaiusculas = document.getElementById('maiusculas').checked;
+      const incluirMinusculas = document.getElementById('minusculas').checked;
+      const incluirNumeros = document.getElementById('numeros').checked;
+      const incluirSimbolos = document.getElementById('simbolos').checked;
+
+      const letrasMaiusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const letrasMinusculas = 'abcdefghijklmnopqrstuvwxyz';
+      const numeros = '0123456789';
+      const simbolos = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+      let caracteres = '';
+      if (incluirMaiusculas) caracteres += letrasMaiusculas;
+      if (incluirMinusculas) caracteres += letrasMinusculas;
+      if (incluirNumeros) caracteres += numeros;
+      if (incluirSimbolos) caracteres += simbolos;
+
+      if (caracteres === '') {
+        document.getElementById('senhaGerada').innerText = 'Selecione pelo menos uma opção!';
+        return;
+      }
+
+      let senha = '';
+      for (let i = 0; i < tamanho; i++) {
+        const indice = Math.floor(Math.random() * caracteres.length);
+        senha += caracteres[indice];
+      }
+
+      document.getElementById('senhaGerada').innerText = senha;
+    }
+  </script>
+</body>
+</html>
